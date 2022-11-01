@@ -1,7 +1,5 @@
 syntax = "proto3";
 
-package vosk.stt.v1;
-
 service RecognizerService {
   rpc Recognize (Control) returns (Result);
 }
