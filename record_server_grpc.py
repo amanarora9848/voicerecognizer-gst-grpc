@@ -16,6 +16,7 @@ from vosk import Model, KaldiRecognizer
 # gst imports
 import gi
 from time import sleep
+import asyncio
 gi.require_version('Gst', '1.0')
 from gi.repository import GObject, Gst
 GObject.threads_init()
@@ -40,15 +41,13 @@ autoaudiosrc.link( queue)
 queue.link( audioconvert)
 audioconvert.link( wavenc)
 wavenc.link( filesink)
+bus = pipeline.get_bus()
 
 def record_from_microphone():
-    bus = pipeline.get_bus()
     pipeline.set_state(Gst.State.PLAYING)
     print('Recording Voice Input')
 
-    sleep(5)
-    # If we need to stop upon pressing a stop button, we can just listen for when that button is pressed and then use pipeline.send_event
-
+def stop_recording():
     print("Sending EOS")
     pipeline.send_event(Gst.Event.new_eos())
     print('Ending Pipeline')
@@ -87,6 +86,7 @@ def voice_recognizer(filename):
     p_text_lst = []
     p_str = []
     len_p_str = []
+    
     while True:
         data = wf.readframes(buffer_size)
         if len(data) == 0:
@@ -97,6 +97,7 @@ def voice_recognizer(filename):
         else:
             p_text_lst.append(rec.PartialResult())
             print(rec.PartialResult())
+            
     if len(text_lst) !=0:
         jd = json.loads(text_lst[0])
         txt_str = jd["text"]
@@ -108,13 +109,14 @@ def voice_recognizer(filename):
 
 class RecognizerServiceServicer(recognize_pb2_grpc.RecognizerServiceServicer):
     def Recognize(self, request, context):
-        if request.start:
+        if request.start and not request.stop:
             record_from_microphone()
-            sleep(1)
-            result = voice_recognizer("recorded_audio.wav")
+            result = "Recording..."
+        elif request.stop and not request.start:
+            stop_recording()
+            result = voice_recognizer(url)
         else:
-            result = "Audio not recorded."
-        
+            result = "Some exception occured"
         return recognize_pb2.Result(result = result)
 
 

@@ -6,6 +6,7 @@ service RecognizerService {
 
 message Control {
   bool start = 1;
+  bool stop = 2;
 }
 
 message Result {
