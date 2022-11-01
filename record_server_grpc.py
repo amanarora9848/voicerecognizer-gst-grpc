@@ -1,9 +1,19 @@
 #!/usr/bin/env python
+
+# grpc imports
 import grpc
 import recognize_pb2
 import recognize_pb2_grpc
 from concurrent import futures
 
+# wav and vosk recognizer imports
+import os
+import sys
+import wave
+import json
+from vosk import Model, KaldiRecognizer
+
+# gst imports
 import gi
 from time import sleep
 gi.require_version('Gst', '1.0')
@@ -37,6 +47,7 @@ def record_from_microphone():
     print('Recording Voice Input')
 
     sleep(5)
+    # If we need to stop upon pressing a stop button, we can just listen for when that button is pressed and then use pipeline.send_event
 
     print("Sending EOS")
     pipeline.send_event(Gst.Event.new_eos())
@@ -44,15 +55,72 @@ def record_from_microphone():
     bus.timed_pop_filtered(Gst.CLOCK_TIME_NONE, Gst.MessageType.EOS)
     pipeline.set_state(Gst.State.NULL)
 
+# Vosk definitions and configurations
+
+vosk_interface = os.environ.get('VOSK_SERVER_INTERFACE', '0.0.0.0')
+vosk_port = int(os.environ.get('VOSK_SERVER_PORT', 5001))
+vosk_model_path = os.environ.get('VOSK_MODEL_PATH', 'model')
+vosk_sample_rate = float(os.environ.get('VOSK_SAMPLE_RATE', 16000))
+
+if len(sys.argv) > 1:
+   vosk_model_path = sys.argv[1]
+
+def voice_recognizer(filename):
+
+    if len(sys.argv) > 1:
+        vosk_model_path = sys.argv[1]
+    # if not os.path.exists("model"):
+    #     print ("Please download the model from https://alphacephei.com/vosk/models and unpack as 'model' in the current folder.")
+    #     exit (1)
+    else:
+        print("Model path must be given as arg")
+        exit(1)
+
+    wf = wave.open(filename, "rb")
+    # if wf.getnchannels() != 1 or wf.getsampwidth() != 2 or wf.getcomptype() != "NONE":
+    #     print ("Audio file must be WAV format mono PCM.")
+    #     exit (1)
+
+    buffer_size = int(wf.getframerate() * 2.5) # 2.5 seconds of audio
+
+    model = Model(vosk_model_path)
+    rec = KaldiRecognizer(model, wf.getframerate())
+    rec.SetWords(True)
+
+    text_lst =[]
+    p_text_lst = []
+    p_str = []
+    len_p_str = []
+    while True:
+        data = wf.readframes(buffer_size)
+        if len(data) == 0:
+            break
+        if rec.AcceptWaveform(data):
+            text_lst.append(rec.Result())
+            print(rec.Result())
+        else:
+            p_text_lst.append(rec.PartialResult())
+            print(rec.PartialResult())
+    if len(text_lst) !=0:
+        jd = json.loads(text_lst[0])
+        txt_str = jd["text"]
+        print(txt_str)
+        return txt_str
+    else:
+        return "Voice not recognized. Please speak again..."
+
+
 class RecognizerServiceServicer(recognize_pb2_grpc.RecognizerServiceServicer):
     def Recognize(self, request, context):
         if request.start:
             record_from_microphone()
-            result = "Audio recorded for 5 seconds."
+            sleep(1)
+            result = voice_recognizer("recorded_audio.wav")
         else:
             result = "Audio not recorded."
         
         return recognize_pb2.Result(result = result)
+
 
 def main():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=5))
