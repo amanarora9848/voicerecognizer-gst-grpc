@@ -55,12 +55,8 @@ def record_from_microphone():
     bus.timed_pop_filtered(Gst.CLOCK_TIME_NONE, Gst.MessageType.EOS)
     pipeline.set_state(Gst.State.NULL)
 
-# Vosk definitions and configurations
 
-vosk_interface = os.environ.get('VOSK_SERVER_INTERFACE', '0.0.0.0')
-vosk_port = int(os.environ.get('VOSK_SERVER_PORT', 5001))
-vosk_model_path = os.environ.get('VOSK_MODEL_PATH', 'model')
-vosk_sample_rate = float(os.environ.get('VOSK_SAMPLE_RATE', 16000))
+# Vosk voice recognition
 
 if len(sys.argv) > 1:
    vosk_model_path = sys.argv[1]
