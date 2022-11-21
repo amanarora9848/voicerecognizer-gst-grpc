@@ -26,9 +26,7 @@ class RecognizeVoice {
     final response = await stub.recognize(Control()
       ..start = false
       ..stop = true);
-    // print(response.result);
     output = response.result;
-    // return response.result;
   }
 }
 
