@@ -49,38 +49,52 @@ class _State extends State<MyApp> {
 
   void record() {
     setState(() {
-      recordstr = "Recording in progress";
-      stopstr = "Click to Stop Recording";
+      recordstr = "Stop recording";
+      stopstr = "Recording...";
     });
     _recognize.startRecognition();
   }
 
   void stop() {
-    _recognize.stopRecognition();
+    _recognize.stopRecognition().then((value) => setState(() {
+          stopstr = "Recognized Text: \n$output";
+        }));
     setState(() {
       recordstr = "Click to Record Audio";
-      stopstr = "Your output: $output";
+      stopstr = "Recognizing...";
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+        debugShowCheckedModeBanner: false,
         home: Scaffold(
             appBar: AppBar(
-              title: const Text("Voice Agent App"),
-              backgroundColor: Colors.green[800],
+              title: const Text("Voice Agent Demo App"),
+              backgroundColor: Colors.grey[800],
+              centerTitle: true,
             ),
             body: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
+                  Image.asset(
+                    'lib/agl.png',
+                    height: 200,
+                    width: 200,
+                  ),
                   GestureDetector(
-                    onTap: () => {record()},
+                    onTap: () => {
+                      if (recordstr == "Click to Record Audio")
+                        {record()}
+                      else
+                        {stop()}
+                    },
                     child: Container(
                         height: 50,
-                        width: 150,
+                        width: 300,
                         decoration: BoxDecoration(
                             color: Colors.grey[200],
                             borderRadius: BorderRadius.circular(12),
@@ -98,35 +112,21 @@ class _State extends State<MyApp> {
                                 color: Colors.grey[800],
                                 fontWeight: FontWeight.bold,
                                 fontSize: 18),
+                            textAlign: TextAlign.center,
                           ),
                         )),
                   ),
                   const SizedBox(height: 20),
-                  GestureDetector(
-                    onTap: () => {stop()},
-                    child: Container(
-                        height: 40,
-                        width: 450,
-                        // color: Colors.white,
-                        decoration: BoxDecoration(
-                            color: Colors.grey[200],
-                            borderRadius: BorderRadius.circular(12),
-                            boxShadow: [
-                              BoxShadow(
-                                  color: Color.fromARGB(255, 82, 139, 85),
-                                  spreadRadius: 1,
-                                  blurRadius: 8,
-                                  offset: Offset(4, 4)),
-                            ]),
-                        child: Center(
-                          child: Text(
-                            stopstr,
-                            style: TextStyle(
-                                color: Colors.grey[800],
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18),
-                          ),
-                        )),
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Text(
+                      stopstr,
+                      style: TextStyle(
+                          color: Colors.grey[800],
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18),
+                      textAlign: TextAlign.center,
+                    ),
                   ),
                 ],
               ),
