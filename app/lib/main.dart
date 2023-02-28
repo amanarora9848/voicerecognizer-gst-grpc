@@ -56,9 +56,14 @@ class _State extends State<MyApp> {
   }
 
   void stop() {
-    _recognize.stopRecognition().then((value) => setState(() {
-          stopstr = "Recognized Text: \n$output";
-        }));
+    _recognize
+        .stopRecognition()
+        .then((value) => setState(() {
+              stopstr = "Recognized Text: \n$output";
+            }))
+        .catchError((error) => setState(() {
+              stopstr = "Something went wrong. Please try again.";
+            }));
     setState(() {
       recordstr = "Click to Record Audio";
       stopstr = "Recognizing...";
