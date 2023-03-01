@@ -15,7 +15,7 @@ class RecognizerServiceStub(object):
             channel: A grpc.Channel.
         """
         self.Recognize = channel.unary_unary(
-                '/vosk.stt.v1.RecognizerService/Recognize',
+                '/RecognizerService/Recognize',
                 request_serializer=recognize__pb2.Control.SerializeToString,
                 response_deserializer=recognize__pb2.Result.FromString,
                 )
@@ -40,7 +40,7 @@ def add_RecognizerServiceServicer_to_server(servicer, server):
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'vosk.stt.v1.RecognizerService', rpc_method_handlers)
+            'RecognizerService', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
 
 
@@ -59,7 +59,7 @@ class RecognizerService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/vosk.stt.v1.RecognizerService/Recognize',
+        return grpc.experimental.unary_unary(request, target, '/RecognizerService/Recognize',
             recognize__pb2.Control.SerializeToString,
             recognize__pb2.Result.FromString,
             options, channel_credentials,

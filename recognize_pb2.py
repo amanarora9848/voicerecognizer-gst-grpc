@@ -13,17 +13,17 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0frecognize.proto\x12\x0bvosk.stt.v1\"\x18\n\x07\x43ontrol\x12\r\n\x05start\x18\x01 \x01(\x08\"\x18\n\x06Result\x12\x0e\n\x06result\x18\x01 \x01(\t2K\n\x11RecognizerService\x12\x36\n\tRecognize\x12\x14.vosk.stt.v1.Control\x1a\x13.vosk.stt.v1.Resultb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0frecognize.proto\"&\n\x07\x43ontrol\x12\r\n\x05start\x18\x01 \x01(\x08\x12\x0c\n\x04stop\x18\x02 \x01(\x08\"\x18\n\x06Result\x12\x0e\n\x06result\x18\x01 \x01(\t23\n\x11RecognizerService\x12\x1e\n\tRecognize\x12\x08.Control\x1a\x07.Resultb\x06proto3')
 
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, globals())
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'recognize_pb2', globals())
 if _descriptor._USE_C_DESCRIPTORS == False:
 
   DESCRIPTOR._options = None
-  _CONTROL._serialized_start=32
-  _CONTROL._serialized_end=56
-  _RESULT._serialized_start=58
-  _RESULT._serialized_end=82
-  _RECOGNIZERSERVICE._serialized_start=84
-  _RECOGNIZERSERVICE._serialized_end=159
+  _CONTROL._serialized_start=19
+  _CONTROL._serialized_end=57
+  _RESULT._serialized_start=59
+  _RESULT._serialized_end=83
+  _RECOGNIZERSERVICE._serialized_start=85
+  _RECOGNIZERSERVICE._serialized_end=136
 # @@protoc_insertion_point(module_scope)
