@@ -86,7 +86,7 @@ class _State extends State<MyApp> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Image.asset(
-                    'lib/agl.png',
+                    'images/agl.png',
                     height: 200,
                     width: 200,
                   ),
