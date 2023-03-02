@@ -9,75 +9,65 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
-class Control extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Control', createEmptyInstance: create)
-    ..aOB(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'start')
-    ..aOB(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'stop')
+import 'recognize.pbenum.dart';
+
+export 'recognize.pbenum.dart';
+
+class RecognizerControl extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'RecognizerControl', createEmptyInstance: create)
+    ..e<RecognizerAction>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'action', $pb.PbFieldType.OE, defaultOrMaker: RecognizerAction.START, valueOf: RecognizerAction.valueOf, enumValues: RecognizerAction.values)
     ..hasRequiredFields = false
   ;
 
-  Control._() : super();
-  factory Control({
-    $core.bool? start,
-    $core.bool? stop,
+  RecognizerControl._() : super();
+  factory RecognizerControl({
+    RecognizerAction? action,
   }) {
     final _result = create();
-    if (start != null) {
-      _result.start = start;
-    }
-    if (stop != null) {
-      _result.stop = stop;
+    if (action != null) {
+      _result.action = action;
     }
     return _result;
   }
-  factory Control.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory Control.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  factory RecognizerControl.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory RecognizerControl.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
   'Will be removed in next major version')
-  Control clone() => Control()..mergeFromMessage(this);
+  RecognizerControl clone() => RecognizerControl()..mergeFromMessage(this);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  Control copyWith(void Function(Control) updates) => super.copyWith((message) => updates(message as Control)) as Control; // ignore: deprecated_member_use
+  RecognizerControl copyWith(void Function(RecognizerControl) updates) => super.copyWith((message) => updates(message as RecognizerControl)) as RecognizerControl; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
-  static Control create() => Control._();
-  Control createEmptyInstance() => create();
-  static $pb.PbList<Control> createRepeated() => $pb.PbList<Control>();
+  static RecognizerControl create() => RecognizerControl._();
+  RecognizerControl createEmptyInstance() => create();
+  static $pb.PbList<RecognizerControl> createRepeated() => $pb.PbList<RecognizerControl>();
   @$core.pragma('dart2js:noInline')
-  static Control getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Control>(create);
-  static Control? _defaultInstance;
+  static RecognizerControl getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<RecognizerControl>(create);
+  static RecognizerControl? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.bool get start => $_getBF(0);
+  RecognizerAction get action => $_getN(0);
   @$pb.TagNumber(1)
-  set start($core.bool v) { $_setBool(0, v); }
+  set action(RecognizerAction v) { setField(1, v); }
   @$pb.TagNumber(1)
-  $core.bool hasStart() => $_has(0);
+  $core.bool hasAction() => $_has(0);
   @$pb.TagNumber(1)
-  void clearStart() => clearField(1);
-
-  @$pb.TagNumber(2)
-  $core.bool get stop => $_getBF(1);
-  @$pb.TagNumber(2)
-  set stop($core.bool v) { $_setBool(1, v); }
-  @$pb.TagNumber(2)
-  $core.bool hasStop() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearStop() => clearField(2);
+  void clearAction() => clearField(1);
 }
 
-class Result extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Result', createEmptyInstance: create)
+class RecognizerResult extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'RecognizerResult', createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'result')
     ..hasRequiredFields = false
   ;
 
-  Result._() : super();
-  factory Result({
+  RecognizerResult._() : super();
+  factory RecognizerResult({
     $core.String? result,
   }) {
     final _result = create();
@@ -86,26 +76,26 @@ class Result extends $pb.GeneratedMessage {
     }
     return _result;
   }
-  factory Result.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory Result.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  factory RecognizerResult.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory RecognizerResult.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
   'Will be removed in next major version')
-  Result clone() => Result()..mergeFromMessage(this);
+  RecognizerResult clone() => RecognizerResult()..mergeFromMessage(this);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  Result copyWith(void Function(Result) updates) => super.copyWith((message) => updates(message as Result)) as Result; // ignore: deprecated_member_use
+  RecognizerResult copyWith(void Function(RecognizerResult) updates) => super.copyWith((message) => updates(message as RecognizerResult)) as RecognizerResult; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
-  static Result create() => Result._();
-  Result createEmptyInstance() => create();
-  static $pb.PbList<Result> createRepeated() => $pb.PbList<Result>();
+  static RecognizerResult create() => RecognizerResult._();
+  RecognizerResult createEmptyInstance() => create();
+  static $pb.PbList<RecognizerResult> createRepeated() => $pb.PbList<RecognizerResult>();
   @$core.pragma('dart2js:noInline')
-  static Result getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Result>(create);
-  static Result? _defaultInstance;
+  static RecognizerResult getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<RecognizerResult>(create);
+  static RecognizerResult? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get result => $_getSZ(0);

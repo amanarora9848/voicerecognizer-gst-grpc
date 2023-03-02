@@ -17,15 +17,12 @@ class RecognizeVoice {
   }
 
   Future<void> startRecognition() async {
-    await stub.recognize(Control()
-      ..start = true
-      ..stop = false);
+    await stub.recognize(RecognizerControl()..action = RecognizerAction.START);
   }
 
   Future<void> stopRecognition() async {
-    final response = await stub.recognize(Control()
-      ..start = false
-      ..stop = true);
+    final response = await stub
+        .recognize(RecognizerControl()..action = RecognizerAction.STOP);
     output = response.result;
   }
 }

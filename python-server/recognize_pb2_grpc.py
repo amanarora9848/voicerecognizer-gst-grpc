@@ -16,8 +16,8 @@ class RecognizerServiceStub(object):
         """
         self.Recognize = channel.unary_unary(
                 '/RecognizerService/Recognize',
-                request_serializer=recognize__pb2.Control.SerializeToString,
-                response_deserializer=recognize__pb2.Result.FromString,
+                request_serializer=recognize__pb2.RecognizerControl.SerializeToString,
+                response_deserializer=recognize__pb2.RecognizerResult.FromString,
                 )
 
 
@@ -35,8 +35,8 @@ def add_RecognizerServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
             'Recognize': grpc.unary_unary_rpc_method_handler(
                     servicer.Recognize,
-                    request_deserializer=recognize__pb2.Control.FromString,
-                    response_serializer=recognize__pb2.Result.SerializeToString,
+                    request_deserializer=recognize__pb2.RecognizerControl.FromString,
+                    response_serializer=recognize__pb2.RecognizerResult.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -60,7 +60,7 @@ class RecognizerService(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/RecognizerService/Recognize',
-            recognize__pb2.Control.SerializeToString,
-            recognize__pb2.Result.FromString,
+            recognize__pb2.RecognizerControl.SerializeToString,
+            recognize__pb2.RecognizerResult.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
