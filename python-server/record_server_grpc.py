@@ -109,15 +109,16 @@ def voice_recognizer(filename):
 
 class RecognizerServiceServicer(recognize_pb2_grpc.RecognizerServiceServicer):
     def Recognize(self, request, context):
-        if request.start and not request.stop:
+
+        if request.action == recognize_pb2.RecognizerAction.START:
             record_from_microphone()
             result = "Recording..."
-        elif request.stop and not request.start:
+        elif request.action == recognize_pb2.RecognizerAction.STOP:
             stop_recording()
             result = voice_recognizer(url)
         else:
             result = "Some exception occured"
-        return recognize_pb2.Result(result = result)
+        return recognize_pb2.RecognizerResult(result = result)
 
 
 def main():

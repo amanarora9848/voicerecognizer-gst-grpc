@@ -1,14 +1,19 @@
 syntax = "proto3";
 
 service RecognizerService {
-  rpc Recognize (Control) returns (Result);
+  rpc Recognize (RecognizerControl) returns (RecognizerResult);
 }
 
-message Control {
-  bool start = 1;
-  bool stop = 2;
+enum RecognizerAction {
+  START = 0;
+  STOP = 1;
 }
 
-message Result {
+message RecognizerControl {
+  RecognizerAction action = 1;
+}
+
+
+message RecognizerResult {
   string result = 1;
 }

@@ -14,17 +14,20 @@ import 'recognize.pb.dart' as $0;
 export 'recognize.pb.dart';
 
 class RecognizerServiceClient extends $grpc.Client {
-  static final _$recognize = $grpc.ClientMethod<$0.Control, $0.Result>(
-      '/RecognizerService/Recognize',
-      ($0.Control value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $0.Result.fromBuffer(value));
+  static final _$recognize =
+      $grpc.ClientMethod<$0.RecognizerControl, $0.RecognizerResult>(
+          '/RecognizerService/Recognize',
+          ($0.RecognizerControl value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) =>
+              $0.RecognizerResult.fromBuffer(value));
 
   RecognizerServiceClient($grpc.ClientChannel channel,
       {$grpc.CallOptions? options,
       $core.Iterable<$grpc.ClientInterceptor>? interceptors})
       : super(channel, options: options, interceptors: interceptors);
 
-  $grpc.ResponseFuture<$0.Result> recognize($0.Control request,
+  $grpc.ResponseFuture<$0.RecognizerResult> recognize(
+      $0.RecognizerControl request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$recognize, request, options: options);
   }
@@ -34,20 +37,20 @@ abstract class RecognizerServiceBase extends $grpc.Service {
   $core.String get $name => 'RecognizerService';
 
   RecognizerServiceBase() {
-    $addMethod($grpc.ServiceMethod<$0.Control, $0.Result>(
+    $addMethod($grpc.ServiceMethod<$0.RecognizerControl, $0.RecognizerResult>(
         'Recognize',
         recognize_Pre,
         false,
         false,
-        ($core.List<$core.int> value) => $0.Control.fromBuffer(value),
-        ($0.Result value) => value.writeToBuffer()));
+        ($core.List<$core.int> value) => $0.RecognizerControl.fromBuffer(value),
+        ($0.RecognizerResult value) => value.writeToBuffer()));
   }
 
-  $async.Future<$0.Result> recognize_Pre(
-      $grpc.ServiceCall call, $async.Future<$0.Control> request) async {
+  $async.Future<$0.RecognizerResult> recognize_Pre($grpc.ServiceCall call,
+      $async.Future<$0.RecognizerControl> request) async {
     return recognize(call, await request);
   }
 
-  $async.Future<$0.Result> recognize(
-      $grpc.ServiceCall call, $0.Control request);
+  $async.Future<$0.RecognizerResult> recognize(
+      $grpc.ServiceCall call, $0.RecognizerControl request);
 }
