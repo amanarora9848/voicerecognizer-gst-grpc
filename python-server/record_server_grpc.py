@@ -29,6 +29,10 @@ queue = Gst.ElementFactory.make("queue", "queue")
 audioconvert = Gst.ElementFactory.make("audioconvert", "audioconvert")
 wavenc = Gst.ElementFactory.make("wavenc", "wavenc")
 filesink = Gst.ElementFactory.make("filesink", "filesink")
+# with tempfile.TemporaryDirectory() as tmpdirname:
+#     print('created temporary directory', tmpdirname)
+#     url = tmpdirname + "/recorded_audio.wav"
+
 url = "recorded_audio.wav"
 filesink.set_property("location",url)
 pipeline.add( autoaudiosrc)
