@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:grpc/grpc.dart';
-import 'package:app/src/generated/recognize.pbgrpc.dart';
+import 'src/generated/recognize.pbgrpc.dart';
 
 String output = "";
 
@@ -10,7 +10,7 @@ class RecognizeVoice {
   RecognizeVoice() {
     channel = ClientChannel(
       'localhost',
-      port: 50052,
+      port: 50053,
       options: ChannelOptions(credentials: ChannelCredentials.insecure()),
     );
     stub = RecognizerServiceClient(channel);

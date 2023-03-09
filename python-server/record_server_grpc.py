@@ -129,7 +129,7 @@ def main():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=5))
     recognize_pb2_grpc.add_RecognizerServiceServicer_to_server(RecognizerServiceServicer(), server)
     print("Server running now.")
-    server.add_insecure_port('[::]:50052')
+    server.add_insecure_port('[::]:50053')
     server.start()
     server.wait_for_termination()
 
