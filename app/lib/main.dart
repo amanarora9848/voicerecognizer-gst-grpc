@@ -10,7 +10,7 @@ class RecognizeVoice {
   RecognizeVoice() {
     channel = ClientChannel(
       'localhost',
-      port: 50053,
+      port: 51053,
       options: ChannelOptions(credentials: ChannelCredentials.insecure()),
     );
     stub = RecognizerServiceClient(channel);
