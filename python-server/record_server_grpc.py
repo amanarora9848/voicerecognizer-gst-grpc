@@ -90,7 +90,7 @@ def voice_recognizer(filename):
     rec = KaldiRecognizer(model, wf.getframerate())
     rec.SetWords(True)
 
-    text_lst =[]
+    text_lst = []
     p_text_lst = []
     p_str = []
     len_p_str = []
@@ -105,12 +105,22 @@ def voice_recognizer(filename):
         else:
             p_text_lst.append(rec.PartialResult())
             print(rec.PartialResult())
-            
-    if len(text_lst) !=0:
-        jd = json.loads(text_lst[0])
-        txt_str = jd["text"]
-        print(txt_str)
-        return txt_str
+
+    if len(p_text_lst) != 0:
+        combined_out = ""
+        print(p_text_lst)
+        for partial_dict in p_text_lst:
+            jd = json.loads(partial_dict)
+            combined_out = combined_out + jd["partial"] + "\n"
+        return combined_out
+
+    # if len(text_lst) !=0:
+    #     jd = json.loads(text_lst[-1]) # get the final output from vosk
+    #     # get the partial output from vosk
+
+    #     txt_str = jd["text"]
+    #     print(text_str)
+    #     return text_str
     else:
         return "Voice not recognized. Please speak again..."
 
