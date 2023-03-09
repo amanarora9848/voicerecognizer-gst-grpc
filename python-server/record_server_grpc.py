@@ -27,6 +27,7 @@ pipeline = Gst.Pipeline()
 autoaudiosrc = Gst.ElementFactory.make("autoaudiosrc", "autoaudiosrc")
 queue = Gst.ElementFactory.make("queue", "queue")
 audioconvert = Gst.ElementFactory.make("audioconvert", "audioconvert")
+capsfilter = Gst.ElementFactory.make("capsfilter", "capsfilter")
 wavenc = Gst.ElementFactory.make("wavenc", "wavenc")
 filesink = Gst.ElementFactory.make("filesink", "filesink")
 # with tempfile.TemporaryDirectory() as tmpdirname:
@@ -38,16 +39,19 @@ filesink.set_property("location",url)
 pipeline.add( autoaudiosrc)
 pipeline.add( queue)
 pipeline.add( audioconvert)
+pipeline.add( capsfilter)
 pipeline.add( wavenc)
 pipeline.add( filesink)
 
 autoaudiosrc.link( queue)
 queue.link( audioconvert)
-audioconvert.link( wavenc)
+audioconvert.link( capsfilter)
+capsfilter.link( wavenc)
 wavenc.link( filesink)
 bus = pipeline.get_bus()
 
 def record_from_microphone():
+    capsfilter.set_property("caps", Gst.Caps.from_string("audio/x-raw,channels=1"))
     pipeline.set_state(Gst.State.PLAYING)
     print('Recording Voice Input')
 
@@ -76,9 +80,9 @@ def voice_recognizer(filename):
         exit(1)
 
     wf = wave.open(filename, "rb")
-    # if wf.getnchannels() != 1 or wf.getsampwidth() != 2 or wf.getcomptype() != "NONE":
-    #     print ("Audio file must be WAV format mono PCM.")
-    #     exit (1)
+    if wf.getnchannels() != 1 or wf.getsampwidth() != 2 or wf.getcomptype() != "NONE":
+        print ("Audio file must be WAV format mono PCM.")
+        exit (1)
 
     buffer_size = int(wf.getframerate() * 2.5) # 2.5 seconds of audio
 
